@@ -1,19 +1,18 @@
 package com.crud.sql.mapper;
 
-import com.crud.sql.dto.CategoryCreateDto;
-import com.crud.sql.dto.CategoryResponseDto;
+import com.crud.sql.dto.CategoryDto;
 import com.crud.sql.entities.Category;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
-import org.springframework.stereotype.Component;
+import org.modelmapper.ModelMapper;
 
-@Mapper(componentModel = "spring")
-@Component
-public interface CategoryMapper {
+public class CategoryMapper {
 
-    CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
+    public CategoryMapper(){}
 
-    CategoryResponseDto toCategoryResponseDto(Category category);
+    public static Category toCategory(CategoryDto categoryDto){
+        return new ModelMapper().map(categoryDto, Category.class);
+    }
 
-    Category toCategory(CategoryCreateDto categoryCreateDto);
+    public static CategoryDto toCategoryDto(Category category){
+        return new ModelMapper().map(category, CategoryDto.class);
+    }
 }
