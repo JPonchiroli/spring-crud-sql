@@ -34,4 +34,8 @@ public class CategoryService {
         );
     }
 
+    @Transactional
+    public void deleteCategory(Long category_id){
+        repository.deleteById(category_id);
+    }
 }
