@@ -25,9 +25,7 @@ public class CategoryController {
 
     @PostMapping("create-category")
     public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto categoryDto){
-        System.out.println(categoryDto);
         Category categoryCreated = CategoryMapper.toCategory(categoryDto);
-        System.out.println(categoryCreated);
 
         service.postCategory(categoryCreated);
         return ResponseEntity.status(201).body(CategoryMapper.toCategoryDto(categoryCreated));
@@ -52,6 +50,16 @@ public class CategoryController {
         service.deleteCategory(category_id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("update-category/{id}")
+    public ResponseEntity<CategoryDto> updateCategory(@PathVariable("id") Long category_id, @RequestBody CategoryDto categoryDto){
+        Category categoryUpdated = findCategory(category_id).getBody();
+        categoryUpdated.setCategory_name(categoryDto.getCategory_name());
+
+        service.putCategory(categoryUpdated);
+        return ResponseEntity.ok().body(CategoryMapper.toCategoryDto(categoryUpdated));
+
     }
 
 }
