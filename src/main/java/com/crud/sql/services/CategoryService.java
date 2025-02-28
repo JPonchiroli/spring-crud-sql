@@ -30,17 +30,27 @@ public class CategoryService {
     @Transactional
     public Category getCategory(Long category_id){
         return repository.findById(category_id).orElseThrow(
-                () -> new EntityNotFoundException("Category Not Found")
+                () -> new EntityNotFoundException("Category not found, insert another id.")
         );
     }
 
     @Transactional
     public void deleteCategory(Long category_id){
+        Optional<Category> category = repository.findById(category_id);
+
+        if (category.isEmpty())
+            throw new EntityNotFoundException("The category not exists or already has been deleted.");
+
         repository.deleteById(category_id);
     }
 
     @Transactional
     public Category putCategory(Category category){
+        Optional<Category> categoryUpdated = repository.findById(category.getCategory_id());
+
+        if (categoryUpdated.isEmpty())
+            throw new EntityNotFoundException("Category not found, insert another id.");
+
         return repository.save(category);
     }
 }
