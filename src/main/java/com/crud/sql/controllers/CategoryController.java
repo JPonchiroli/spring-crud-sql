@@ -2,9 +2,8 @@ package com.crud.sql.controllers;
 
 import com.crud.sql.dto.CategoryDto;
 import com.crud.sql.entities.Category;
-import com.crud.sql.mapper.CategoryMapper;
+import com.crud.sql.mappers.CategoryMapper;
 import com.crud.sql.services.CategoryService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

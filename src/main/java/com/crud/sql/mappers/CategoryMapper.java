@@ -1,4 +1,4 @@
-package com.crud.sql.mapper;
+package com.crud.sql.mappers;
 
 import com.crud.sql.dto.CategoryDto;
 import com.crud.sql.entities.Category;
