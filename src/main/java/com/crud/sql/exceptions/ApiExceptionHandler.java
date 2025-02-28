@@ -21,4 +21,17 @@ public class ApiExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
+
+
+    @ExceptionHandler(EmptyValuesException.class)
+    public ResponseEntity<ErrorMessage> handleEmptyValuesException(EmptyValuesException ex, HttpServletRequest request) {
+        ErrorMessage error = new ErrorMessage(
+                request.getRequestURI(),
+                request.getMethod(),
+                HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage()
+        );
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
 }

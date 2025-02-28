@@ -2,9 +2,11 @@ package com.crud.sql.services;
 
 import com.crud.sql.dto.CategoryDto;
 import com.crud.sql.entities.Category;
+import com.crud.sql.exceptions.EmptyValuesException;
 import com.crud.sql.repositories.CategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,9 @@ public class CategoryService {
 
     @Transactional
     public Category postCategory(Category category){
+        if (category.getCategory_name().isEmpty())
+            throw new EmptyValuesException("Empty values are not allowed, please insert a category name");
+
         return repository.save(category);
     }
 
@@ -50,6 +55,9 @@ public class CategoryService {
 
         if (categoryUpdated.isEmpty())
             throw new EntityNotFoundException("Category not found, insert another id.");
+
+        if (category.getCategory_name().isEmpty())
+            throw new EmptyValuesException("Empty values are not allowed, please insert a category name");
 
         return repository.save(category);
     }
