@@ -6,12 +6,14 @@ public class ProductDto {
 
     private String product_name;
     private Double product_price;
+    private Long category_id;
 
     public ProductDto(){}
 
-    public ProductDto(String product_name, Double product_price) {
+    public ProductDto(String product_name, Double product_price, Long category_id) {
         this.product_name = product_name;
         this.product_price = product_price;
+        this.category_id = category_id;
     }
 
     public String getProduct_name() {
@@ -29,4 +31,13 @@ public class ProductDto {
     public void setProduct_price(Double product_price) {
         this.product_price = product_price;
     }
+
+    public Long getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(Long category_id) {
+        this.category_id = category_id;
+    }
+
 }

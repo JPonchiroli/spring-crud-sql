@@ -1,6 +1,7 @@
 package com.crud.sql.entities;
 
 import com.crud.sql.dto.CategoryDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +22,7 @@ public class Category {
     private String category_name;
 
     @OneToMany(mappedBy = "category")
+    @JsonIgnore
     private List<Product> products;
 
     public Category(){}
