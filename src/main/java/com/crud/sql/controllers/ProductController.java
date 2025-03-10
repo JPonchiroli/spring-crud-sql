@@ -1,8 +1,10 @@
 package com.crud.sql.controllers;
 
+import com.crud.sql.dto.CategoryDto;
 import com.crud.sql.dto.ProductDto;
 import com.crud.sql.entities.Category;
 import com.crud.sql.entities.Product;
+import com.crud.sql.mappers.CategoryMapper;
 import com.crud.sql.mappers.ProductMapper;
 import com.crud.sql.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +48,15 @@ public class ProductController {
         service.deleteProduct(product_id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("update-product/{id}")
+    public ResponseEntity<ProductDto> updateCategory(@PathVariable("id") Long product_id, @RequestBody ProductDto productDto){
+        Product productUpdated = findProduct(product_id).getBody();
+        productUpdated.setProduct_name(productDto.getProduct_name());
+        productUpdated.setProduct_price(productDto.getProduct_price());
+
+        service.putProduct(productUpdated);
+        return ResponseEntity.ok().body(ProductMapper.toProductDto(productUpdated));
     }
 }

@@ -58,7 +58,6 @@ public class CategoryController {
 
         service.putCategory(categoryUpdated);
         return ResponseEntity.ok().body(CategoryMapper.toCategoryDto(categoryUpdated));
-
     }
 
 }

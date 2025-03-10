@@ -2,6 +2,7 @@ package com.crud.sql.services;
 
 import com.crud.sql.entities.Category;
 import com.crud.sql.entities.Product;
+import com.crud.sql.exceptions.EmptyValuesException;
 import com.crud.sql.repositories.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,21 @@ public class ProductService {
             throw new EntityNotFoundException("The product not exists or already has been deleted.");
 
         repository.deleteById(product_id);
+    }
+
+    @Transactional
+    public Product putProduct(Product product){
+        Optional<Product> productUpdated = repository.findById(product.getProduct_id());
+
+        if (productUpdated.isEmpty())
+            throw new EntityNotFoundException("Category not found, insert another id.");
+
+        if (product.getProduct_name().isEmpty())
+            throw new EmptyValuesException("Empty values are not allowed, please insert a product name");
+
+        if (product.getProduct_price() == 0.00)
+            throw new EmptyValuesException("The must be more than 0, please insert a product price");
+
+        return repository.save(product);
     }
 }
