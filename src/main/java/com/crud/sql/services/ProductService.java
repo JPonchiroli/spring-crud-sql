@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -31,5 +32,15 @@ public class ProductService {
         return repository.findById(product_id).orElseThrow(
                 () -> new EntityNotFoundException("Product not found, insert another id.")
         );
+    }
+
+    @Transactional
+    public void deleteProduct(Long product_id){
+        Optional<Product> product = repository.findById(product_id);
+
+        if (product.isEmpty())
+            throw new EntityNotFoundException("The product not exists or already has been deleted.");
+
+        repository.deleteById(product_id);
     }
 }
