@@ -16,7 +16,18 @@ public class Product {
     @Column(name = "product_price", nullable = false)
     private Double product_price;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     public Product(){}
+
+    public Product(Long product_id, String product_name, Double product_price, Category category) {
+        this.product_id = product_id;
+        this.product_name = product_name;
+        this.product_price = product_price;
+        this.category = category;
+    }
 
     public Long getProduct_id() {
         return product_id;
@@ -40,6 +51,14 @@ public class Product {
 
     public void setProduct_price(Double product_price) {
         this.product_price = product_price;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override
