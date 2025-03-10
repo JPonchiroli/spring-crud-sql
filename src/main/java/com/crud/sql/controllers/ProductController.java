@@ -1,16 +1,15 @@
 package com.crud.sql.controllers;
 
-import com.crud.sql.dto.CategoryDto;
 import com.crud.sql.dto.ProductDto;
 import com.crud.sql.entities.Category;
 import com.crud.sql.entities.Product;
-import com.crud.sql.mappers.CategoryMapper;
 import com.crud.sql.mappers.ProductMapper;
+import com.crud.sql.services.CategoryService;
 import com.crud.sql.services.ProductService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.List;
 
@@ -21,12 +20,21 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
-    @PostMapping("create-product")
-    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto){
-        Product productCreated = ProductMapper.toProduct(productDto);
+    @Autowired
+    private CategoryService categoryService;
 
+    @PostMapping("create-product")
+    public ResponseEntity<Product> createProduct(@RequestBody ProductDto productDto){
+        Product productCreated = ProductMapper.toProduct(productDto);
+        Category category = categoryService.getCategory(productDto.getCategory_id());
+
+        if (category == null) {
+            throw new IllegalArgumentException("Category not found!");
+        }
+
+        productCreated.setCategory(category);
         service.postProduct(productCreated);
-        return ResponseEntity.status(201).body(ProductMapper.toProductDto(productCreated));
+        return ResponseEntity.status(201).body(productCreated);
     }
 
     @GetMapping("get-products")

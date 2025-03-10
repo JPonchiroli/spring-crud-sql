@@ -3,6 +3,7 @@ package com.crud.sql.services;
 import com.crud.sql.entities.Category;
 import com.crud.sql.entities.Product;
 import com.crud.sql.exceptions.EmptyValuesException;
+import com.crud.sql.repositories.CategoryRepository;
 import com.crud.sql.repositories.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,6 @@ public class ProductService {
     @Autowired
     private ProductRepository repository;
 
-    @Transactional
     public Product postProduct(Product product){
         return repository.save(product);
     }
